@@ -166,7 +166,7 @@ static skin_node_t* create_leaf_node(skin_t* skin, char* text, bool negate) {
   } else {
     // lookup the property
     // we do this O(N) search because I don't care, somewhat of an optimization is that the
-    // input nodes get allocated first so they
+    // input nodes get allocated first so you won't be reading all the general arithmetic nodes etc.
     for (int i = 0; i < skin->num_nodes; i++) {
       skin_node_t* node = &skin->node_pool[i];
       if (node->name[0] != 0) {

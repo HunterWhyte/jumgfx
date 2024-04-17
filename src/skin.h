@@ -53,6 +53,22 @@ struct skin_node_t {
   int num_values;
 };
 
+#define MAX_NODES 64
+#define MAX_INPUTS 256
+
+typedef struct skin_input_node {
+  char* name;
+  char* description;
+  skin_node_t* node;
+} skin_input_node_t;
+
+typedef struct skin_input {
+  char* name;
+  char* description;
+  skin_input_node_t nodes[MAX_NODES];
+  int num_nodes;
+} skin_input_t;
+
 #define NODE_POOL_SIZE 4096
 #define INPUT_VALUE_POOL_SIZE 4096
 #define LITERAL_POOL_SIZE 4096
@@ -62,7 +78,7 @@ typedef struct skin_t {
   skin_node_t node_pool[NODE_POOL_SIZE];
 } skin_t;
 
-void skin_init(skin_t** skin);
+void skin_init(skin_t** skin, skin_input_t* inputs, int num_inputs);
 void skin_deinit(skin_t* skin);
 void node_evaluate(skin_node_t* root);
 

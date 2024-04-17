@@ -1,6 +1,6 @@
 add_executable(
     test
-    expression_tests.c
+    tests.c
     )
 
 target_compile_options(test PRIVATE -g)

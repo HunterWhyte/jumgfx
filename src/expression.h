@@ -23,13 +23,13 @@ static inline char* op_to_string(skin_operator op) {
   return operator_strings[op];
 }
 
-static inline void print_node_tree_intermediates(skin_node_t* p, int indent) {
+static inline void print_node_tree_verbose(skin_node_t* p, int indent) {
   if (p == NULL) {
     return;
   }
 
   if (p->arg) {
-    print_node_tree_intermediates(p->arg, indent + 1);
+    print_node_tree_verbose(p->arg, indent + 1);
   }
   for (int i = 0; i < indent; i++) {
     printf("\t");
@@ -46,7 +46,7 @@ static inline void print_node_tree_intermediates(skin_node_t* p, int indent) {
   printf("}\n");
 
   if (p->child) {
-    print_node_tree_intermediates(p->child, indent + 1);
+    print_node_tree_verbose(p->child, indent + 1);
   }
 }
 

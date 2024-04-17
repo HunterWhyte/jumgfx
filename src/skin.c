@@ -1,29 +1,41 @@
-#include <stdlib.h>
-#include <stdio.h>
-#include <assert.h>
-
 #include "skin.h"
 
-void skin_init(skin_t** skin) {
-  *skin = malloc(sizeof(skin_t));
+#include <assert.h>
+#include <stdio.h>
+#include <stdlib.h>
+
+void skin_init(skin_t** skin_out, skin_input_t* inputs, int num_inputs) {
+  skin_t* skin = malloc(sizeof(skin_t));
   // clear pool allocators
-  (*skin)->num_nodes = 0;
+  skin->num_nodes = 0;
+
+  // create nodes based on the set of inputs provided
+  for (int i = 0; i < num_inputs; i++) {
+    for (int j = 0; j < inputs[i].num_nodes; j++) {
+      snprintf(skin->node_pool[skin->num_nodes].name, MAX_NODE_NAME, "%s_%s",
+               inputs[i].name, inputs[i].nodes[j].name);
+      inputs[i].nodes[j].node = &skin->node_pool[skin->num_nodes];
+      skin->num_nodes++;
+    }
+  }
+
+  *skin_out = skin;
+  return;
 }
 
-void skin_deinit(skin_t* skin) {
-  free(skin);
-}
+void skin_deinit(skin_t* skin) { free(skin); }
 
 void node_evaluate(skin_node_t* root) {
-
   // =============== LEAF NODE ===============
 
-  // if this is a leaf node then we don't need to evaluate anything and can just return
+  // if this is a leaf node then we don't need to evaluate anything and can just
+  // return
   if (root->child == NULL && root->arg == NULL) {
     return;
   }
 
-  // check for invalid node states (TODO: just make these impossible with a union?)
+  // check for invalid node states (TODO: just make these impossible with a
+  // union?)
   if (root->child == NULL || root->op == SKINOP_NOP) {
     printf("ERROR MALFORMED NODE\n");
     assert(0);
@@ -55,10 +67,10 @@ void node_evaluate(skin_node_t* root) {
   }
   root->num_values = root->child->num_values;
 
-  // for arithmetic operators if the node length of the arg is less than the node length
-  // of the child then we extend the arg values to the length of the array
-  // we split this out now sot hat we can avoid doing conditional checking every loop iteration to
-  // see if we exceeded the length of the arg node
+  // for arithmetic operators if the node length of the arg is less than the
+  // node length of the child then we extend the arg values to the length of the
+  // array we split this out now sot hat we can avoid doing conditional checking
+  // every loop iteration to see if we exceeded the length of the arg node
   int num_ops = MIN(root->num_values, root->arg->num_values);
 
   // if the argument node is empty then we just return without modifying
@@ -82,7 +94,8 @@ void node_evaluate(skin_node_t* root) {
   float* root_vals = root->values;
   int root_len = root->num_values;
 
-  // we are doing loops inside of op switch because we only need to evaluate op once
+  // we are doing loops inside of op switch because we only need to evaluate op
+  // once
   // TODO figure out what this actually compiles to vs. the alternative
   switch (root->op) {
     case (SKINOP_ADD):
@@ -118,7 +131,7 @@ void node_evaluate(skin_node_t* root) {
             root_vals[i] /= arg_vals[i];
           }
         }
-        if (arg_len - 1 == 0) {
+        if (arg_vals[arg_len - 1] == 0) {
           printf("warning divide by zero in skin engine");
         } else {
           for (int i = num_ops; i < root_len; i++) {  // extended operation
