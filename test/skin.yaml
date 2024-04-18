@@ -1,0 +1,43 @@
+
+
+layers:
+  - name: guh
+    shader:
+      vert: vert.glsl
+      frag: frag.glsl
+      uniform:
+        name: u_example
+        value: "1.0 > 0"
+    items:
+      - item: "guh?"
+        x: 1
+        y: 1
+        w: 5
+        h: 5
+        texture: test.png
+      - item: "wuh?"
+        x: 2
+        y: 2
+        w: 5
+        h: 5
+        texture: test.png
+  - name: another_layer
+    shader:
+      vert: vert.glsl
+      frag: frag.glsl
+      uniform:
+        name: u_example
+        value: "1.0 > 0"
+    items:
+      - item: "guh?"
+        x: 1
+        y: 1
+        w: 5
+        h: 5
+        texture: test.png
+      - item: "wuh?"
+        x: 2
+        y: 2
+        w: 5
+        h: 5
+        texture: test.png

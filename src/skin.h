@@ -7,6 +7,10 @@ extern "C" {
 #define MAX(a, b) (a > b ? a : b)
 #define EPSILON 0.000001
 
+#define MAX_EXPRESSION_LENGTH 4096
+#define MAX_TOKEN_LENGTH 1024
+#define MAX_NUM_TOKENS 512
+
 typedef enum op {
   SKINOP_NOP = 0,
   // arithmetic operators
@@ -28,19 +32,19 @@ typedef enum skin_error {
   SKINERR_EXPRESSION_ERROR,
 } skin_error;
 
-#define MAX_NODE_NAME 256
+#define MAX_NAME_LENGTH 256
 #define MAX_VALUES 4096
 /**
- * @brief The basic unit of the skin engine are nodes. A node performs an 
+ * @brief The basic unit of the skin engine are nodes. A node performs an
  * operation or holds a value.
- * 
+ *
  * Nodes are allocated from a pool that is generated on skin parsing.
  * We get a pointer to a node on initialization and use that. At the end of skin
  * lifetime we free entire pool of nodes.
-*/
+ */
 typedef struct skin_node_t skin_node_t;
 struct skin_node_t {
-  char name[MAX_NODE_NAME];
+  char name[MAX_NAME_LENGTH];
   // defines type of node
   skin_operator op;
 
@@ -80,6 +84,8 @@ typedef struct skin_t {
 
 void skin_init(skin_t** skin, skin_input_t* inputs, int num_inputs);
 void skin_deinit(skin_t* skin);
+void skin_draw(skin_t* skin, float delta);
+
 void node_evaluate(skin_node_t* root);
 
 #ifdef __cplusplus

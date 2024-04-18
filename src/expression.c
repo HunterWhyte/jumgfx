@@ -11,10 +11,6 @@
 
 #include "expression.h"
 
-#define MAX_EXPRESSION_LENGTH 4096
-#define MAX_TOKEN_LENGTH 1024
-#define MAX_NUM_TOKENS 512
-
 #define NUM_SPECIAL_CHARS 12
 static const char special_chars[NUM_SPECIAL_CHARS] = {'+', '*', '/', '-', '%', '(',
                                                       ')', '_', ',', '>', '<', '='};
@@ -119,8 +115,12 @@ static void register_error(char* error_string) {
   printf("ERROR: %s\n", error_string);
 }
 
+
+// TODO: Helper pulling from pool, move this to skin.c?
+/**
+ * @brief helper for allocating a new node from skin pool
+*/
 static skin_node_t* get_new_node(skin_t* skin) {
-  // TODO: pulling from pool, move this to skin.c?
   assert(skin->num_nodes < NODE_POOL_SIZE);
   skin_node_t* node = &skin->node_pool[skin->num_nodes];
   skin->num_nodes++;
@@ -146,7 +146,7 @@ static skin_node_t* create_internal_node(skin_t* skin, skin_node_t* val, skin_op
 */
 static skin_node_t* create_leaf_node(skin_t* skin, char* text, bool negate) {
   if (is_numeric(text)) {
-    if (strlen(text) >= MAX_NODE_NAME - 1) {
+    if (strlen(text) >= MAX_NAME_LENGTH - 1) {
       register_error("create_leaf_node literal string length exceeds max node name length");
       return NULL;
     }
