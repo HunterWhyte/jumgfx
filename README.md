@@ -39,9 +39,9 @@ Expressions are parsed into trees of nodes. If we were to write the expression `
 
 This would get parsed into.
 ```
-	[Addition Operator]
-	/                 \
-[PLAYER_POS]	      [1]
+  [Addition Operator]
+  /                 \
+[PLAYER_POS]        [1]
 ```
 Then evaluating the addition operator node would result in the value of `PLAYER_POS` + the literal value `1`.
 
@@ -88,8 +88,8 @@ Each leaf node can represent a channel for a single output from the game, a sing
 For example the input into the framework for a block would look like
 ```
 BLOCK
-	x position
-	y position
+  x position
+  y position
 ```
 
 Where x and y position are nodes.
@@ -100,8 +100,8 @@ As covered in the Node Lengths section, there can be multiple values per node. F
 
 ```
 BLOCK
-	x position = [5, 20, 40..]
-	y position = [0, 10, 8..]
+  x position = [5, 20, 40..]
+  y position = [0, 10, 8..]
 ```
 
 This represents three blocks at positions `(5,0), (20,10), (40,8)`. Since the x and y positions are stored in different nodes. If we want to draw an item at all three positions the output needs to index through the arrays consistently. There are set rules for how this happens.
@@ -112,8 +112,8 @@ So for example if we took
 
 ```
 BLOCK
-	x position = [5, 20, 40..]
-	y position = [0, 10, 8…]
+  x position = [5, 20, 40..]
+  y position = [0, 10, 8…]
 ```
 
 and fed it into an expression of `(BLOCK.x + BLOCK.y)`. The output would be `[5, 30, 48]`.
@@ -209,6 +209,6 @@ Items
 
 Shaders
   Vertex
-	Fragment
-	Uniforms
+  Fragment
+  Uniforms
 ```
