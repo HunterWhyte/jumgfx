@@ -6,27 +6,26 @@ SUITE(expression_parser);
 
 // example input, this gets defined in a c file? the #defines go in a header
 // file?
-skin_input_t inputs[] = {
-    {.name = "example",
-     .description = "this is an example input",
-     .nodes =
-         {
-             {.name = "x", .description = "the x position of the thing"},
-             {.name = "size", .description = "the size of the thing"},
-         },
-     .num_nodes = 2},
+skin_input_t inputs[] = {{.name = "example",
+                          .description = "this is an example input",
+                          .nodes =
+                              {
+                                  {.name = "x", .description = "the x position of the thing"},
+                                  {.name = "size", .description = "the size of the thing"},
+                              },
+                          .num_nodes = 2},
 #define example inputs[0]
 #define example_x example.nodes[0]
 #define example_size example.nodes[1]
 
-    {.name = "example2",
-     .description = "this is another example input",
-     .nodes =
-         {
-             {.name = "y", .description = "the y position of the thing"},
-             {.name = "girth", .description = "the girth of the thing"},
-         },
-     .num_nodes = 2}
+                         {.name = "example2",
+                          .description = "this is another example input",
+                          .nodes =
+                              {
+                                  {.name = "y", .description = "the y position of the thing"},
+                                  {.name = "girth", .description = "the girth of the thing"},
+                              },
+                          .num_nodes = 2}
 #define example2 inputs[1]
 #define example2_y example2.nodes[0]
 #define example2_girth example2.nodes[1]

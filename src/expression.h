@@ -40,7 +40,7 @@ static inline void print_node_tree_verbose(skin_node_t* p, int indent) {
   } else {  // print the operator
     printf("(%s [%d] {", op_to_string(p->op), p->num_values);
   }
-  for(int i = 0; i < p->num_values; i++){
+  for (int i = 0; i < p->num_values; i++) {
     printf("%.2f, ", p->values[i]);
   }
   printf("}\n");

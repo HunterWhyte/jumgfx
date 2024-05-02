@@ -12,8 +12,8 @@ void skin_init(skin_t** skin_out, skin_input_t* inputs, int num_inputs) {
   // create nodes based on the set of inputs provided
   for (int i = 0; i < num_inputs; i++) {
     for (int j = 0; j < inputs[i].num_nodes; j++) {
-      snprintf(skin->node_pool[skin->num_nodes].name, MAX_NAME_LENGTH, "%s_%s",
-               inputs[i].name, inputs[i].nodes[j].name);
+      snprintf(skin->node_pool[skin->num_nodes].name, MAX_NAME_LENGTH, "%s_%s", inputs[i].name,
+               inputs[i].nodes[j].name);
       inputs[i].nodes[j].node = &skin->node_pool[skin->num_nodes];
       skin->num_nodes++;
     }
@@ -23,7 +23,9 @@ void skin_init(skin_t** skin_out, skin_input_t* inputs, int num_inputs) {
   return;
 }
 
-void skin_deinit(skin_t* skin) { free(skin); }
+void skin_deinit(skin_t* skin) {
+  free(skin);
+}
 
 void node_evaluate(skin_node_t* root) {
   // =============== LEAF NODE ===============

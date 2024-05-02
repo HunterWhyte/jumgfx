@@ -115,7 +115,6 @@ static void register_error(char* error_string) {
   printf("ERROR: %s\n", error_string);
 }
 
-
 // TODO: Helper pulling from pool, move this to skin.c?
 /**
  * @brief helper for allocating a new node from skin pool
@@ -133,7 +132,7 @@ static skin_node_t* get_new_node(skin_t* skin) {
  * @brief helper to create an operator node (not leaf)
 */
 static skin_node_t* create_internal_node(skin_t* skin, skin_node_t* val, skin_operator op,
-                                skin_node_t* arg) {
+                                         skin_node_t* arg) {
   skin_node_t* node = get_new_node(skin);
   node->child = val;
   node->op = op;
